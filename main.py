@@ -56,41 +56,61 @@ def show_menu():
     print("5. Выйти")
 
 
+def get_user_choice():
+    return input("Выберите действие (1-5): ").strip()
+
+
+def add_task_handler(todo):
+    task = input("Введите новую задачу: ").strip()
+    if task:
+        todo.add_task(task)
+    else:
+        print("Нельзя добавить пустую задачу.")
+
+
+def complete_task_handler(todo):
+    task = input("Введите название задачи для выполнения: ").strip()
+    if task:
+        todo.complete_task(task)
+    else:
+        print("Название задачи не может быть пустым.")
+
+
+def remove_task_handler(todo):
+    task = input("Введите название задачи для удаления: ").strip()
+    if task:
+        todo.remove_task(task)
+    else:
+        print("Название задачи не может быть пустым.")
+
+
+def list_tasks_handler(todo):
+    todo.list_tasks()
+
+
+def exit_handler():
+    print("Выход из программы. До свидания!")
+    exit()
+
+
 def main():
     todo = ToDoList()
 
+    menu_actions = {
+        "1": add_task_handler,
+        "2": complete_task_handler,
+        "3": remove_task_handler,
+        "4": list_tasks_handler,
+        "5": exit_handler
+    }
+
     while True:
         show_menu()
-        choice = input("Выберите действие (1-5): ")
+        choice = get_user_choice()
 
-        if choice == "1":
-            task = input("Введите новую задачу: ").strip()
-            if task:
-                todo.add_task(task)
-            else:
-                print("Нельзя добавить пустую задачу.")
-
-        elif choice == "2":
-            task = input("Введите название задачи для выполнения: ").strip()
-            if task:
-                todo.complete_task(task)
-            else:
-                print("Название задачи не может быть пустым.")
-
-        elif choice == "3":
-            task = input("Введите название задачи для удаления: ").strip()
-            if task:
-                todo.remove_task(task)
-            else:
-                print("Название задачи не может быть пустым.")
-
-        elif choice == "4":
-            todo.list_tasks()
-
-        elif choice == "5":
-            print("Выход из программы. До свидания!")
-            break
-
+        action = menu_actions.get(choice)
+        if action:
+            action(todo) if choice != "5" else action()  # exit не требует аргумента
         else:
             print("Неверный выбор. Пожалуйста, выберите число от 1 до 5.")
 
