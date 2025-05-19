@@ -23,8 +23,3 @@
 - `complete_task(task)` — отмечает задачу как выполненную.
 - `remove_task(task)` — удаляет задачу.
 - `list_tasks()` — выводит список всех задач с их статусом.
-
-## Автор
-[Ваше имя или никнейм]
-
-Feel free to use and modify this project as needed!
